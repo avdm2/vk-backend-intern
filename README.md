@@ -56,8 +56,3 @@ extraEnv:
   - name: DB_PASSWORD
     value: pass
 ```
-
-Можно запустить через **docker-compose**:
-```yaml
-docker-compose up
-```
