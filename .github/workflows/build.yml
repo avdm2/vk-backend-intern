@@ -41,7 +41,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/vk_backend_intern:${GITHUB_REF_NAME//\//-}-${GITHUB_SHA::7}
 
       - name: Push latest
-        if: ${{ github.ref_name == 'main' }}
+        if: ${{ github.ref_name == 'main' || github.ref_name == 'master' }}
         run: |
           docker tag ${{ secrets.DOCKER_USERNAME }}/vk_backend_intern:${GITHUB_REF_NAME//\//-}-${GITHUB_SHA::7} ${{ secrets.DOCKER_USERNAME }}/vk_backend_intern:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/vk_backend_intern:latest
