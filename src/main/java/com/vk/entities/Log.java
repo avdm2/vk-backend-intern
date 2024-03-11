@@ -1,5 +1,6 @@
 package com.vk.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +28,10 @@ public class Log {
 
     private LocalDateTime time;
 
-    private String request;
+    private String internalRequest;
+    private String externalRequest;
+
+    @Column(length = 10_000)
     private String body;
 
     private Integer statusCode;

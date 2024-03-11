@@ -2,7 +2,7 @@ package com.vk.controllers;
 
 import com.vk.dto.posts.CreatePostRequest;
 import com.vk.dto.posts.CreatePostResponse;
-import com.vk.dto.posts.GetPostCommentResponse;
+import com.vk.dto.posts.GetPostCommentsResponse;
 import com.vk.dto.posts.GetPostResponse;
 import com.vk.dto.posts.UpdatePostRequest;
 import com.vk.dto.posts.UpdatePostResponse;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/posts")
-public class PostsController {
+public class PostController {
 
     private final PostService postService;
 
-    public PostsController(PostService postService) {
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
@@ -38,7 +38,7 @@ public class PostsController {
     }
 
     @GetMapping("/{postId}/comments")
-    public ResponseEntity<GetPostCommentResponse[]> getPostComments(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<GetPostCommentsResponse[]> getPostComments(@PathVariable("postId") Integer postId) {
         return ResponseEntity.ok(postService.getPostComments(postId));
     }
 

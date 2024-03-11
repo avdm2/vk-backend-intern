@@ -1,19 +1,24 @@
 app:
+  cache:
+    size: 20
   urls:
     posts: "https://jsonplaceholder.typicode.com/posts"
     users: "https://jsonplaceholder.typicode.com/users"
     albums: "https://jsonplaceholder.typicode.com/albums"
     comments: "https://jsonplaceholder.typicode.com/comments"
 
-server:
-  port: 8181
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
 
 spring:
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/vk_backend_intern}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:vk_backend_intern}
     driverClassName: org.postgresql.Driver
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:admin}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:admin}
   jpa:
     hibernate:
       ddl-auto: update
