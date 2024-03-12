@@ -33,39 +33,4 @@ public class Log {
 
     @Column(length = 10_000)
     private String requestBody;
-    @Column(length = 10_000)
-    private String responseBody;
-
-    private Integer statusCode;
-
-    @Override
-    public int hashCode() {
-        return 31 * id.hashCode() +
-                username.hashCode() +
-                time.hashCode() +
-                internalRequest.hashCode() +
-                role.hashCode() +
-                requestBody.hashCode() +
-                responseBody.hashCode() +
-                statusCode.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        Log other = (Log) obj;
-        return id.equals(other.id) &&
-                username.equals(other.username) &&
-                time.equals(other.time) &&
-                internalRequest.equals(other.internalRequest) &&
-                role.equals(other.role) &&
-                requestBody.equals(other.requestBody) &&
-                responseBody.equals(other.responseBody) &&
-                statusCode.equals(other.statusCode);
-    }
 }

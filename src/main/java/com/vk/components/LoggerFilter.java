@@ -1,4 +1,4 @@
-package com.vk;
+package com.vk.components;
 
 import com.vk.entities.Log;
 import com.vk.repositories.LogRepository;
@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,9 +20,9 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-//@Component
+@Component
 @Slf4j
-//@WebFilter(filterName = "LoggerFilter", urlPatterns = "/*")
+@WebFilter(filterName = "LoggerFilter", urlPatterns = "/*")
 public class LoggerFilter extends OncePerRequestFilter {
 
     private final LogRepository logRepository;
@@ -45,22 +44,18 @@ public class LoggerFilter extends OncePerRequestFilter {
                 ? "anonymous"
                 : SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
         String requestBody = IOUtils.toString(cachedHttpServletRequest.getInputStream(), StandardCharsets.UTF_8);
-        String responseBody = response.getOutputStream().toString();
-        Integer statusCode = response.getStatus();
 
-        log.info("Received request: username={}; time={}; internalRequest={}; role={}; body={}; statusCode={}",
+        log.info("Received request: username={}; time={}; internalRequest={}; role={}; requestBody={};",
                 username,
                 time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-                internalRequest, role, requestBody, statusCode);
+                internalRequest, role, requestBody);
 
         logRepository.save(new Log()
                 .setUsername(username)
                 .setTime(time)
                 .setInternalRequest(internalRequest)
                 .setRole(role)
-                .setRequestBody(requestBody)
-                .setResponseBody(responseBody)
-                .setStatusCode(statusCode));
+                .setRequestBody(requestBody));
 
         filterChain.doFilter(cachedHttpServletRequest, response);
     }

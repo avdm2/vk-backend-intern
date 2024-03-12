@@ -1,5 +1,6 @@
 package com.vk.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vk.dto.albums.CreateAlbumRequest;
 import com.vk.dto.albums.CreateAlbumResponse;
 import com.vk.dto.albums.GetAlbumCommentsResponse;
@@ -30,36 +31,40 @@ public class AlbumController {
     }
 
     @GetMapping
-    public ResponseEntity<GetAlbumResponse[]> getAllAlbums() {
+    public ResponseEntity<GetAlbumResponse[]> getAllAlbums() throws JsonProcessingException {
         return ResponseEntity.ok(albumService.getAllAlbums());
     }
 
     @GetMapping("/{albumId}")
-    public ResponseEntity<GetAlbumResponse> getAlbum(@PathVariable("albumId") Integer albumId) {
+    public ResponseEntity<GetAlbumResponse> getAlbum(@PathVariable("albumId") Integer albumId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(albumService.getAlbum(albumId));
     }
 
     @GetMapping("/{albumId}/comments")
-    public ResponseEntity<GetAlbumCommentsResponse[]> getAlbumComments(@PathVariable("albumId") Integer albumId) {
+    public ResponseEntity<GetAlbumCommentsResponse[]> getAlbumComments(@PathVariable("albumId") Integer albumId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(albumService.getPostComments(albumId));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ALBUMS')")
-    public ResponseEntity<CreateAlbumResponse> createAlbum(@RequestBody CreateAlbumRequest request) {
+    public ResponseEntity<CreateAlbumResponse> createAlbum(@RequestBody CreateAlbumRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(albumService.createAlbum(request));
     }
 
     @PutMapping("/{albumId}")
     @PreAuthorize("hasRole('ROLE_ALBUMS')")
     public ResponseEntity<UpdateAlbumResponse> updateAlbum(@PathVariable("albumId") Integer albumId,
-                                                           @RequestBody UpdateAlbumRequest request) {
+                                                           @RequestBody UpdateAlbumRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(albumService.updateAlbum(albumId, request));
     }
 
     @DeleteMapping("/{albumId}")
     @PreAuthorize("hasRole('ROLE_ALBUMS')")
-    public ResponseEntity<?> deleteAlbum(@PathVariable("albumId") Integer albumId) {
+    public ResponseEntity<?> deleteAlbum(@PathVariable("albumId") Integer albumId) throws JsonProcessingException {
         albumService.deleteAlbum(albumId);
         return ResponseEntity.ok().build();
     }

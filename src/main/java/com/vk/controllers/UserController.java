@@ -1,5 +1,6 @@
 package com.vk.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vk.dto.users.CreateUserRequest;
 import com.vk.dto.users.CreateUserResponse;
 import com.vk.dto.users.GetUserCommentsResponse;
@@ -30,36 +31,40 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<GetUserResponse[]> getAllUsers() {
+    public ResponseEntity<GetUserResponse[]> getAllUsers() throws JsonProcessingException {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<GetUserResponse> getUser(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<GetUserResponse> getUser(@PathVariable("userId") Integer userId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
     @GetMapping("/{userId}/comments")
-    public ResponseEntity<GetUserCommentsResponse[]> getUserComments(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<GetUserCommentsResponse[]> getUserComments(@PathVariable("userId") Integer userId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(userService.getUserComments(userId));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_USERS')")
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(userService.createUser(request));
     }
 
     @PutMapping("/{userId}")
     @PreAuthorize("hasRole('ROLE_USERS')")
     public ResponseEntity<UpdateUserResponse> updateUser(@PathVariable("userId") Integer userId,
-                                                         @RequestBody UpdateUserRequest request) {
+                                                         @RequestBody UpdateUserRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(userService.updateUser(userId, request));
     }
 
     @DeleteMapping("/{userId}")
     @PreAuthorize("hasRole('ROLE_USERS')")
-    public ResponseEntity<?> deleteUser(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") Integer userId) throws JsonProcessingException {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }

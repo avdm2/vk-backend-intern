@@ -1,28 +1,28 @@
 package com.vk.components;
 
-import com.vk.entities.Log;
+import com.vk.dto.CacheLogDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-// @Component
+@Component
 public class CacheService {
 
-    // @Value("${app.cache.size}")
+    @Value("${app.cache.size}")
     private Integer cacheSize;
 
-    private final Map<Log, String> cache = new LinkedHashMap<>();
+    private final Map<CacheLogDto, String> cache = new LinkedHashMap<>();
 
-    public void put(Log log, String response) {
+    public void put(CacheLogDto log, String response) {
         if (cache.size() == cacheSize) {
             cache.remove(cache.keySet().iterator().next());
         }
         cache.put(log, response);
     }
 
-    public String get(Log log) {
+    public String get(CacheLogDto log) {
         return cache.get(log);
     }
 }

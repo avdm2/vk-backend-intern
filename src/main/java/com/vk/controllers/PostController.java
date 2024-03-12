@@ -1,5 +1,6 @@
 package com.vk.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vk.dto.posts.CreatePostRequest;
 import com.vk.dto.posts.CreatePostResponse;
 import com.vk.dto.posts.GetPostCommentsResponse;
@@ -30,36 +31,40 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<GetPostResponse[]> getAllPosts() {
+    public ResponseEntity<GetPostResponse[]> getAllPosts() throws JsonProcessingException {
         return ResponseEntity.ok(postService.getAllPosts());
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<GetPostResponse> getPost(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<GetPostResponse> getPost(@PathVariable("postId") Integer postId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
     @GetMapping("/{postId}/comments")
-    public ResponseEntity<GetPostCommentsResponse[]> getPostComments(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<GetPostCommentsResponse[]> getPostComments(@PathVariable("postId") Integer postId)
+            throws JsonProcessingException {
         return ResponseEntity.ok(postService.getPostComments(postId));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_POSTS')")
-    public ResponseEntity<CreatePostResponse> createPost(@RequestBody CreatePostRequest request) {
+    public ResponseEntity<CreatePostResponse> createPost(@RequestBody CreatePostRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(postService.createPost(request));
     }
 
     @PutMapping("/{postId}")
     @PreAuthorize("hasRole('ROLE_POSTS')")
     public ResponseEntity<UpdatePostResponse> updatePost(@PathVariable("postId") Integer postId,
-                                                         @RequestBody UpdatePostRequest request) {
+                                                         @RequestBody UpdatePostRequest request)
+            throws JsonProcessingException {
         return ResponseEntity.ok(postService.updatePost(postId, request));
     }
 
     @DeleteMapping("/{postId}")
     @PreAuthorize("hasRole('ROLE_POSTS')")
-    public ResponseEntity<?> deletePost(@PathVariable("postId") Integer postId) {
+    public ResponseEntity<?> deletePost(@PathVariable("postId") Integer postId) throws JsonProcessingException {
         postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
