@@ -8,6 +8,7 @@ import com.vk.dto.users.UpdateUserRequest;
 import com.vk.dto.users.UpdateUserResponse;
 import com.vk.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasRole('ROLE_USERS_VIEWER')")
 public class UserController {
 
     private final UserService userService;
@@ -43,17 +45,20 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_USERS')")
     public ResponseEntity<CreateUserResponse> createUser(@RequestBody CreateUserRequest request) {
         return ResponseEntity.ok(userService.createUser(request));
     }
 
     @PutMapping("/{userId}")
+    @PreAuthorize("hasRole('ROLE_USERS')")
     public ResponseEntity<UpdateUserResponse> updateUser(@PathVariable("userId") Integer userId,
                                                          @RequestBody UpdateUserRequest request) {
         return ResponseEntity.ok(userService.updateUser(userId, request));
     }
 
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasRole('ROLE_USERS')")
     public ResponseEntity<?> deleteUser(@PathVariable("userId") Integer userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();

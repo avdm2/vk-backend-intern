@@ -1,11 +1,13 @@
 app:
+  jwt:
+    secret: ${JWT_SECRET:MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA53VzmIVVZZWyNm266l82}
+    duration-in-minutes: ${JWT_DURATION_MINUTES:60}
   cache:
-    size: 20
+    size: ${CACHE_SIZE:5}
   urls:
     posts: "https://jsonplaceholder.typicode.com/posts"
     users: "https://jsonplaceholder.typicode.com/users"
     albums: "https://jsonplaceholder.typicode.com/albums"
-    comments: "https://jsonplaceholder.typicode.com/comments"
 
 management:
   endpoint:
@@ -24,7 +26,6 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         order_by.default_null_ordering: last
         format_sql: true
     open-in-view: false

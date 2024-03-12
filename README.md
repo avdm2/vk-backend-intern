@@ -5,15 +5,16 @@
     - /api/posts/**
     - /api/users/**
     - /api/albums/**
-- ~~Авторизация со следующими ролями:~~
-  - ~~**ROLE_ADMIN**~~
-  - ~~**ROLE_POSTS**~~
-  - ~~**ROLE_USERS**~~
-  - ~~**ROLE_ALBUMS**~~
-  - ~~**ROLE_COMMENTS**~~
-- ~~In-memory cache~~
-- ~~Аудит действий пользователей (включая сохранения логов в БД)~~
-- ~~Эндпоинты для создания пользователей (включая сохранение данных пользователей в БД)~~
+- Авторизация со следующими ролями:
+  - **ROLE_ADMIN**
+  - **ROLE_POSTS**
+  - **ROLE_USERS**
+  - **ROLE_ALBUMS**
+  - **ROLE_POSTS_VIEWER**
+  - **ROLE_USERS_VIEWER**
+  - **ROLE_ALBUMS_VIEWER**
+- Аудит действий пользователей (включая сохранения логов в БД)
+- Эндпоинты для создания пользователей (включая сохранение данных пользователей в БД)
 - ~~Юнит (скорее, интеграционные) тесты~~
 
 ---
@@ -23,6 +24,8 @@
 Добавлена контейнеризация и helm-chart для развертывания приложения в k8s. Чарт умеет принимать переменные окружения через флаги.
 Пример использования:
 ```
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo update
 helm install postgresql bitnami/postgresql -f postgres-values.yml --wait --timeout 180s
 helm upgrade --install proxy-service ./helm-chart-k8s \
     --set fullnameOverride=proxy-service \

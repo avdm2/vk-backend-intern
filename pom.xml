@@ -24,10 +24,19 @@
 
         <sprint-boot-starter-web.version>3.2.1</sprint-boot-starter-web.version>
         <spring-boot-starter-data-jpa.version>3.2.1</spring-boot-starter-data-jpa.version>
+
+        <postgresql.version>42.7.2</postgresql.version>
+
+        <jjwt-api.version>0.11.5</jjwt-api.version>
+        <jjwt-impl.version>0.11.5</jjwt-impl.version>
+        <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
+
         <spring-boot-starter-test.version>3.2.2</spring-boot-starter-test.version>
         <spring-boot-starter-actuator.version>3.2.2</spring-boot-starter-actuator.version>
+
         <lombok.version>1.18.30</lombok.version>
-        <postgres.version>42.7.2</postgres.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
+
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
     </properties>
 
@@ -50,7 +59,32 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgres.version}</version>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+        <!-- Authorization & Authentication: Spring Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Authorization & Authentication: JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt-impl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt-jackson.version}</version>
         </dependency>
 
         <!-- Testing: Spring Boot Starter Test -->
@@ -74,6 +108,12 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- Misc: Apache Commons Lang -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
         </dependency>
     </dependencies>
 

@@ -8,6 +8,7 @@ import com.vk.dto.albums.UpdateAlbumRequest;
 import com.vk.dto.albums.UpdateAlbumResponse;
 import com.vk.services.AlbumService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/albums")
+@PreAuthorize("hasRole('ROLE_ALBUMS_VIEWER')")
 public class AlbumController {
 
     private final AlbumService albumService;
@@ -43,17 +45,20 @@ public class AlbumController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ALBUMS')")
     public ResponseEntity<CreateAlbumResponse> createAlbum(@RequestBody CreateAlbumRequest request) {
         return ResponseEntity.ok(albumService.createAlbum(request));
     }
 
     @PutMapping("/{albumId}")
+    @PreAuthorize("hasRole('ROLE_ALBUMS')")
     public ResponseEntity<UpdateAlbumResponse> updateAlbum(@PathVariable("albumId") Integer albumId,
                                                            @RequestBody UpdateAlbumRequest request) {
         return ResponseEntity.ok(albumService.updateAlbum(albumId, request));
     }
 
     @DeleteMapping("/{albumId}")
+    @PreAuthorize("hasRole('ROLE_ALBUMS')")
     public ResponseEntity<?> deleteAlbum(@PathVariable("albumId") Integer albumId) {
         albumService.deleteAlbum(albumId);
         return ResponseEntity.ok().build();
