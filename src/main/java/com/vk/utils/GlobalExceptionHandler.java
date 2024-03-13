@@ -1,6 +1,7 @@
 package com.vk.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.vk.security.exception.InvalidCredentialsException;
 import com.vk.security.exception.UsernameAlreadyExistsException;
 import org.springframework.boot.actuate.endpoint.InvalidEndpointRequestException;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(JsonProcessingException.class)
     public ResponseEntity<String> handleJsonProcessingException(JsonProcessingException exception) {
         return ResponseEntity.status(500).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentialsException(InvalidCredentialsException exception) {
+        return ResponseEntity.status(401).body(exception.getMessage());
     }
 }

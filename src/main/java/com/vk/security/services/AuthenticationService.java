@@ -1,6 +1,7 @@
 package com.vk.security.services;
 
 import com.vk.security.entities.User;
+import com.vk.security.exception.InvalidCredentialsException;
 import com.vk.security.exception.UsernameAlreadyExistsException;
 import com.vk.security.repositories.UserRepository;
 import com.vk.security.dto.JwtAuthenticationResponse;
@@ -41,10 +42,10 @@ public class AuthenticationService {
     }
 
     public JwtAuthenticationResponse signIn(SignInRequest request) {
+        var user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new InvalidCredentialsException("Invalid username or password."));
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password."));
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse().setToken(jwt);
     }
