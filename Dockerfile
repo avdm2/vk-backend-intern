@@ -1,9 +1,10 @@
-FROM openjdk:17-jdk-slim
+FROM maven:3.9.6-eclipse-temurin-17 as build
 
 VOLUME /tmp
-ARG JAR_FILE
-COPY ${JAR_FILE} app.jar
 
-EXPOSE 8080
+COPY src ./src
+COPY pom.xml .
 
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN mvn clean package -DskipTests
+
+ENTRYPOINT ["java","-jar","target/vk-backend-intern-1.0-SNAPSHOT.jar"]

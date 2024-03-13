@@ -28,6 +28,7 @@ spring:
       hibernate:
         order_by.default_null_ordering: last
         format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
     show-sql: true
     generate-ddl: true
